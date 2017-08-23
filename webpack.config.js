@@ -2,12 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './lib/add.js',
+  entry: './lib/authservice.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'add.min.js',
+    filename: 'authservice.min.js',
     libraryTarget: 'umd',
-    library: 'add'
+    library: 'authservice-javascript'
   },
   module: {
     rules: [

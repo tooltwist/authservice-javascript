@@ -4,12 +4,14 @@ This is a simplified client interface to Authservice.io.
 
 It also uses Jest as unit testing.
 
-## Installation
+## Contributing
 
 ```sh
-git clone https://github.com/tooltwist/authservice-javascript.git
-cd authservice-javascript
+Fork the project, then
+
 npm install
 npm run test # to launch the tests
 npm run build # to build the distro
 ```
+
+Send a pull request with suggested changes. Thanks!
