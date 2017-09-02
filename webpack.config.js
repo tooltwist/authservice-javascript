@@ -5,7 +5,7 @@ module.exports = {
   entry: './lib/authservice.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'authservice.min.js',
+    filename: 'authservice.js',
     libraryTarget: 'umd',
     library: 'authservice-javascript'
   },
@@ -18,6 +18,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin()
+    //new webpack.optimize.UglifyJsPlugin()
   ]
 }

@@ -1,7 +1,89 @@
-const jwtDecode = require('jwt-decode');
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["authservice-javascript"] = factory();
+	else
+		root["authservice-javascript"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var Authservice = (function() {
-  const URLPREFIX = 'http:';
+"use strict";
+
+
+var Authservice = function () {
 
   var LOGIN_DETAILS_COOKIE_NAME = 'authservice-login-details';
   var JWT_COOKIE_NAME = 'authservice-jwt';
@@ -28,7 +110,6 @@ var Authservice = (function() {
   var _$http = null;
   var _jQuery = null;
 
-
   // Are we simulating?
   var _pretend = false;
 
@@ -38,8 +119,7 @@ var Authservice = (function() {
   // Use jQuery to manipulate the DOM, rather than Angular
   var _bindToDOM = false;
 
-
-  var dummyUserBob =  {
+  var dummyUserBob = {
     "tenant": "nodeclient",
     "id": 901,
     "authority": "email",
@@ -64,31 +144,25 @@ var Authservice = (function() {
       "user_middle_name": "B"
     },
     "relationshipSummary": {
-      "isFriendedBy": [
-        {
-          "entity_id": 902,
-          "full_name": "Jim Boots",
-          "last_name": "Boots",
-          "entity_type": "user"
-        }
-      ],
-      "hasFriend": [
-        {
-          "entity_id": 903,
-          "full_name": "Jill Jones",
-          "last_name": "Jones",
-          "entity_type": "user"
-        }
-      ]
+      "isFriendedBy": [{
+        "entity_id": 902,
+        "full_name": "Jim Boots",
+        "last_name": "Boots",
+        "entity_type": "user"
+      }],
+      "hasFriend": [{
+        "entity_id": 903,
+        "full_name": "Jill Jones",
+        "last_name": "Jones",
+        "entity_type": "user"
+      }]
     },
-    "relationships": [
-      {
-        "relationship_id": 6,
-        "relationship_type": "friend",
-        "entity_id_1": 901,
-        "entity_id_2": 902
-      }
-    ]
+    "relationships": [{
+      "relationship_id": 6,
+      "relationship_type": "friend",
+      "entity_id_1": 901,
+      "entity_id_2": 902
+    }]
   };
 
   function getDummyUser(username) {
@@ -99,24 +173,21 @@ var Authservice = (function() {
     }
   }
 
-
-
   /*
    *  Perform an AJAX, using jQuery or Angular if available.
    */
-  function authservice_ajax_call(method, urlpath, params, withAuthorizedHeader, successCallback/*(response)*/, errorCallback/*(statusCode, statusText, responseJSON)*/) {
+  function authservice_ajax_call(method, urlpath, params, withAuthorizedHeader, successCallback /*(response)*/, errorCallback /*(statusCode, statusText, responseJSON)*/) {
 
-    // var url = ENDPOINT + urlpath;
     var url = ENDPOINT + urlpath;
-    console.log('authservice_ajax_call(method, ' + urlpath + ')')
-    console.log(url)
+    console.log('authservice_ajax_call(method, ' + urlpath + ')');
+    console.log(url);
     console.log(params);
     console.log("vvvvvv calling vvvvvv");
-    // if (errorCallback) {
-    //   console.log('------- have an errorCallback')
-    // } else {
-    //   console.log('------- no errorCallback - will use default')
-    // }
+    if (errorCallback) {
+      console.log('------- have errorCallback');
+    } else {
+      console.log('------- no errorCallback');
+    }
 
     // See if this is an Angular AJAX call
     if (_$http) {
@@ -132,7 +203,7 @@ var Authservice = (function() {
        *
        *  See https://docs.angularjs.org/api/ng/service/$http
        */
-console.log('*** Using Angular AJAX call');
+      console.log('*** Using Angular AJAX call');
       var req = {
         method: method,
         url: url,
@@ -141,18 +212,19 @@ console.log('*** Using Angular AJAX call');
 
       if (withAuthorizedHeader) {
         req.headers = {
-          'Authorization' : 'Bearer XYZ'
+          'Authorization': 'Bearer XYZ'
         };
       }
 
-      _$http(req).then(function(response) { // success handler
+      _$http(req).then(function (response) {
+        // success handler
 
         // Successful AJAX call.
         var data = response.data; // {string|Object} – The response body transformed with the transform functions.
-        console.log('success:', data)
+        console.log('success:', data);
         return successCallback(data);
-
-      }, function(response) { // error handler
+      }, function (response) {
+        // error handler
 
         // Error during API call.
         var statusCode = response.status; // {number} – HTTP status code of the response.
@@ -164,25 +236,24 @@ console.log('*** Using Angular AJAX call');
         }
 
         // We have no error callback, so we'll report the error here and return null data.
-        alert('An error occurred contacting Authservice.\nSee the Javascript console for details.')
-        console.log('statusCode:', response)
-        console.log('statusText:', statusText)
-        console.log('error:', error)
+        alert('An error occurred contacting Authservice.\nSee the Javascript console for details.');
+        console.log('statusCode:', response);
+        console.log('statusText:', statusText);
+        console.log('error:', error);
         return successCallback(null);
       });
-
-
-    } else {  // Use jQuery AJAX.
+    } else {
+      // Use jQuery AJAX.
 
       // We don't have Angular's $http, so use jQuery AJAX.
       // See http://api.jquery.com/jquery.ajax/
-console.log('*** jQuery AJAX call (before)');
-      var headers = { };
+      console.log('*** jQuery AJAX call (before)');
+      var headers = {};
       if (withAuthorizedHeader) {
         headers.Authorization = 'Bearer XYZ';
       }
 
-      var json = JSON.stringify(params)
+      var json = JSON.stringify(params);
       _jQuery.ajax({
         url: url,
         type: method, // Using CORS
@@ -192,29 +263,29 @@ console.log('*** jQuery AJAX call (before)');
         dataType: "json",
         headers: headers,
         contentType: 'application/json',
-        success: function(response) {
+        success: function success(response) {
           console.log('*** jQuery AJAX call (success)', response);
 
           // Successful AJAX call.
           return successCallback(response);
         },
-        error: function(jqxhr, textStatus, errorThrown) {
+        error: function error(jqxhr, textStatus, errorThrown) {
           console.log('*** jQuery AJAX call (error)', jqxhr, textStatus, errorThrown);
 
           // Error during AJAX call.
           var statusCode = jqxhr.status; // {number} – HTTP status code of the response.
           var statusText = jqxhr.statusText; // {string} null, "timeout", "error", "abort", or "parsererror"
-          var responseJSON =  jqxhr.responseJSON;
+          var responseJSON = jqxhr.responseJSON;
           // var error = errorThrown; // {string} "When an HTTP error occurs, errorThrown receives the textual portion of the HTTP status."
           if (errorCallback) {
             return errorCallback(statusCode, statusText, responseJSON);
           }
 
           // We have no error callback, so we'll report the error here and return null data.
-          alert('An error occurred contacting Authservice.\nSee the Javascript console for details.')
-          console.log('statusCode:', statusCode)
-          console.log('statusText:', statusText)
-          console.log('responseJSON:', responseJSON)
+          alert('An error occurred contacting Authservice.\nSee the Javascript console for details.');
+          console.log('statusCode:', statusCode);
+          console.log('statusText:', statusText);
+          console.log('responseJSON:', responseJSON);
           // return successCallback(null);
         }
       });
@@ -236,16 +307,16 @@ console.log('*** jQuery AJAX call (before)');
   function setCurrentUserFromCookie() {
 
     // See if we have a AUTHSERVICE_JWT in the URL to this page
-    var jwt = getURLParameterByName("AUTHSERVICE_JWT")
+    var jwt = getURLParameterByName("AUTHSERVICE_JWT");
     if (jwt) {
       console.log("***");
       console.log("***");
-      console.log("*** AUTHSERVICE_JWT IN URL")
+      console.log("*** AUTHSERVICE_JWT IN URL");
       console.log("***");
       console.log("***");
       var isFromCookie = false;
       if (setCurrentUserFromJWT(jwt, isFromCookie)) {
-      // Remember this JWT in a cookie for the next page.
+        // Remember this JWT in a cookie for the next page.
         setCookie(JWT_COOKIE_NAME, jwt, LOGIN_TIMEOUT_DAYS);
       } else {
         removeCookie(JWT_COOKIE_NAME);
@@ -253,19 +324,18 @@ console.log('*** jQuery AJAX call (before)');
       return;
     }
 
-
     // See if we have a cookie containing the current JWT
     var jwt = getCookie(JWT_COOKIE_NAME);
     if (jwt) {
       console.log("***");
       console.log("***");
-      console.log("*** AUTHSERVICE_JWT IN A COOKIE")
+      console.log("*** AUTHSERVICE_JWT IN A COOKIE");
       console.log("***");
       console.log("***");
       // var isFromCookie = true;
       var isFromCookie = false; // Check if it is stale ZZZZ
       if (setCurrentUserFromJWT(jwt, isFromCookie)) {
-          // Good login from cookie
+        // Good login from cookie
       } else {
         // Dud cookie
         removeCookie(JWT_COOKIE_NAME);
@@ -305,7 +375,7 @@ console.log('*** jQuery AJAX call (before)');
     // not a good cookie
     console.log("***");
     console.log("***");
-    console.log("*** AUTHSERVICE_JWT NOT IN URL OR COOKIE")
+    console.log("*** AUTHSERVICE_JWT NOT IN URL OR COOKIE");
     console.log("***");
     console.log("***");
     var isFromCookie = false;
@@ -330,12 +400,12 @@ console.log('*** jQuery AJAX call (before)');
           lastname: _currentUser.lastname
         },
         ttuat: _ttuat
-      }
-      console.log('Setting ' + LOGIN_DETAILS_COOKIE_NAME + ' (not sure why)')
+      };
+      console.log('Setting ' + LOGIN_DETAILS_COOKIE_NAME + ' (not sure why)');
       setCookie(LOGIN_DETAILS_COOKIE_NAME, JSON.stringify(cookieObj), LOGIN_TIMEOUT_DAYS);
     } else {
       // Remove the cookie
-      console.log('Removing ' + LOGIN_DETAILS_COOKIE_NAME + ' (no current user)')
+      console.log('Removing ' + LOGIN_DETAILS_COOKIE_NAME + ' (no current user)');
       setCookie(LOGIN_DETAILS_COOKIE_NAME, null, 0);
     }
   }
@@ -388,20 +458,21 @@ console.log('*** jQuery AJAX call (before)');
         _jQuery('.authservice-current-user-firstname').text(user.firstname);
         _jQuery('.authservice-current-user-lastname').text(user.lastname);
 
-        if(user.avatar) {
+        if (user.avatar) {
           _jQuery('.authservice-current-user-avatar').attr('src', user.avatar).show();
           _jQuery('.authservice-default-user-avatar').attr('src', user.avatar).hide();
         } else {
           _jQuery('.authservice-current-user-avatar').attr('src', user.avatar).hide();
           _jQuery('.authservice-default-user-avatar').attr('src', user.avatar).show();
         }
-      }//- _bindToDOM
+      } //- _bindToDOM
 
-      if (_onUserChange) { // && oldCurrentUser==null) {
+      if (_onUserChange) {
+        // && oldCurrentUser==null) {
 
         var newUser = getCurrentUser(); // may be a clone
         var newTtuat = _ttuat;
-        (_onUserChange)(newUser, newTtuat, fromCookie);
+        _onUserChange(newUser, newTtuat, fromCookie);
       }
     } else {
 
@@ -417,9 +488,10 @@ console.log('*** jQuery AJAX call (before)');
         _jQuery('.authservice-current-user-firstname').text('');
         _jQuery('.authservice-current-user-lastname').text('');
         _jQuery('.authservice-current-user-avatar').attr('src', '').hide();
-      }//- _bindToDOM
+      } //- _bindToDOM
 
-      if (_onUserChange) { // && oldCurrentUser != null) {
+      if (_onUserChange) {
+        // && oldCurrentUser != null) {
         var fromCookie = false;
         _onUserChange(null, null, fromCookie);
       }
@@ -442,21 +514,16 @@ console.log('*** jQuery AJAX call (before)');
         console.log(decoded);
         var ident = decoded.identity;
         haveUser = true;
-
       } catch (e) {
-        console.log('Error decoding JWT: ', e)
-        alert('Error decoding invalid JWT')
+        console.log('Error decoding JWT: ', e);
+        alert('Error decoding invalid JWT');
         haveUser = false;
       }
     }
 
-
-
     // Change the current user.
     var oldCurrentUser = _currentUser;
     if (haveUser) {
-
-
 
       var user = {
         authority: ident.authority,
@@ -476,7 +543,7 @@ console.log('*** jQuery AJAX call (before)');
         middlename: ident.middle_name,
         privileges: ident.privileges,
         status: ident.status,
-        timezone: ident.timezone,
+        timezone: ident.timezone
         // type: ident.type,
       };
 
@@ -500,16 +567,16 @@ console.log('*** jQuery AJAX call (before)');
           _jQuery('.authservice-current-user-avatar').attr('src', user.avatar).hide();
           _jQuery('.authservice-default-user-avatar').attr('src', user.avatar).show();
         }
-      }//- _bindToDOM
+      } //- _bindToDOM
 
-      if (_onUserChange) { // && oldCurrentUser==null) {
+      if (_onUserChange) {
+        // && oldCurrentUser==null) {
 
         var newUser = getCurrentUser(); // may be a clone
         var newTtuat = _ttuat;
-        (_onUserChange)(newUser, newTtuat, fromCookie);
+        _onUserChange(newUser, newTtuat, fromCookie);
       }
       return true;
-
     } else {
 
       // No longer logged in
@@ -519,7 +586,7 @@ console.log('*** jQuery AJAX call (before)');
       _jwt = null;
 
       // Remove the cookie
-      console.log('Removing ' + LOGIN_DETAILS_COOKIE_NAME + ' (not sure why)')
+      console.log('Removing ' + LOGIN_DETAILS_COOKIE_NAME + ' (not sure why)');
       setCookie(LOGIN_DETAILS_COOKIE_NAME, null, 0);
 
       if (_bindToDOM) {
@@ -528,9 +595,10 @@ console.log('*** jQuery AJAX call (before)');
         _jQuery('.authservice-current-user-firstname').text('');
         _jQuery('.authservice-current-user-lastname').text('');
         _jQuery('.authservice-current-user-avatar').attr('src', '').hide();
-      }//- _bindToDOM
+      } //- _bindToDOM
 
-      if (_onUserChange) { // && oldCurrentUser != null) {
+      if (_onUserChange) {
+        // && oldCurrentUser != null) {
         var fromCookie = false;
         _onUserChange(null, null, fromCookie);
       }
@@ -539,8 +607,6 @@ console.log('*** jQuery AJAX call (before)');
     }
   }
 
-
-
   /*
   *  Set a cookie in the browser, for the entire site.
   */
@@ -548,16 +614,15 @@ console.log('*** jQuery AJAX call (before)');
     // console.log('setCookie(' + cname + ', ' + cvalue + ')');
     console.log('setCookie(' + cname + ')');
     var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+    var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }// setCookie()
+  } // setCookie()
 
   function removeCookie(cname) {
     console.log('removeCookie(' + cname + ')');
     setCookie(cname, null, 0);
   }
-
 
   /*
   *  Get a cookie from the browser.
@@ -566,7 +631,7 @@ console.log('*** jQuery AJAX call (before)');
     //console.log('getCookie(' + cname + ')')
     var name = cname + "=";
     var ca = document.cookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
       var c = ca[i];
       while (c.charAt(0) == ' ') {
         c = c.substring(1);
@@ -578,8 +643,7 @@ console.log('*** jQuery AJAX call (before)');
     }
     //console.log('- no cookie with this name')
     return "";
-  }// getCookie()
-
+  } // getCookie()
 
 
   // Create a new user object from the server-returned identity record.
@@ -622,8 +686,6 @@ console.log('*** jQuery AJAX call (before)');
     return user;
   }
 
-
-
   /**
   ***
   ***   Now comes the actual object used by the application.
@@ -643,7 +705,7 @@ console.log('*** jQuery AJAX call (before)');
     getCookie: getCookie,
     getCurrentUser: getCurrentUser,
     getCurrentUserId: getCurrentUserId,
-    getUserAccessToken: getUserAccessToken,//ZZZZ ?
+    getUserAccessToken: getUserAccessToken, //ZZZZ ?
     initiateOAuth2: initiateOAuth2,
     bounce: bounce,
     bounceURL: bounceURL,
@@ -656,7 +718,7 @@ console.log('*** jQuery AJAX call (before)');
     // },
 
     init: function init(options) {
-      console.log('authservice.init()')
+      console.log('authservice.init()');
 
       /*
       *  Check the input parameters.
@@ -665,13 +727,13 @@ console.log('*** jQuery AJAX call (before)');
       _port = options.port ? options.port : 80;
       _version = options.version ? options.version : 'v2';
       _apikey = options.tenant;
-      ENDPOINT = URLPREFIX + '//' + _host + ':' + _port + '/' + _version + '/' + _apikey;
+      ENDPOINT = '//' + _host + ':' + _port + '/' + _version + '/' + _apikey;
       console.log('endpoint = ' + ENDPOINT);
 
       if (options.$http) {
         _$http = options.$http;
       } else if (options.jQuery) {
-        _jQuery = options.jQuery
+        _jQuery = options.jQuery;
       } else if ($) {
         _jQuery = $; // Won't happen when this is a module.
       } else {
@@ -684,9 +746,8 @@ console.log('*** jQuery AJAX call (before)');
         _bindToDOM = options.bindToDOM;
       }
 
-
       // In pretend mode, we use hard coded usernames
-      _pretend = (options.pretend) ? true : false;
+      _pretend = options.pretend ? true : false;
 
       // See if we are currently logged in, based on the browser cookie.
       setCurrentUserFromCookie();
@@ -695,15 +756,14 @@ console.log('*** jQuery AJAX call (before)');
         /*
          *  Set up nice callbacks for buttons, etc.
          */
-        _jQuery('#authservice-login-button').click(function(){
+        _jQuery('#authservice-login-button').click(function () {
           _jQuery('#authservice-login-div').show();
           _jQuery('#authservice-forgot-div').hide();
           _jQuery('#authservice-register-div').hide();
           return false;
         });
 
-
-        _jQuery('#authservice-forgot-button').click(function(){
+        _jQuery('#authservice-forgot-button').click(function () {
           _jQuery('#authservice-login-button').hide();
           _jQuery('#authservice-login-div').hide();
           _jQuery('#authservice-forgot-div').show();
@@ -712,9 +772,7 @@ console.log('*** jQuery AJAX call (before)');
           return false;
         });
 
-
-
-        _jQuery('#authservice-register-button').click(function(){
+        _jQuery('#authservice-register-button').click(function () {
           _jQuery('#authservice-login-button').hide();
           _jQuery('#authservice-login-div').hide();
           _jQuery('#authservice-forgot-button').hide();
@@ -723,38 +781,29 @@ console.log('*** jQuery AJAX call (before)');
           return false;
         });
 
-
-
         _jQuery('#authservice-forgot-cancel').click(authservice.resetLoginMenu);
         _jQuery('#authservice-forgot-ok').click(authservice.resetLoginMenu);
         _jQuery('#authservice-register-cancel').click(authservice.resetLoginMenu);
         _jQuery('#authservice-register-ok').click(authservice.resetLoginMenu);
 
-
-
-        _jQuery('#authservice-logout-button').click(function(){
+        _jQuery('#authservice-logout-button').click(function () {
           authservice.logout();
         });
 
+        _jQuery('#authservice-login-submit').click(function () {
+          var username = _jQuery('#authservice-login-username').val();
+          var password = _jQuery('#authservice-login-password').val();
 
-
-
-        _jQuery('#authservice-login-submit').click(function() {
-           var username = _jQuery('#authservice-login-username').val();
-           var password = _jQuery('#authservice-login-password').val();
-
-           authservice.login(username, password, function(user){
-             // Success
-             authservice.resetLoginMenu();
-           }, function() {
-             // Fail
-             _jQuery('#authservice-login-errmsg').show();
-           })
-
+          authservice.login(username, password, function (user) {
+            // Success
+            authservice.resetLoginMenu();
+          }, function () {
+            // Fail
+            _jQuery('#authservice-login-errmsg').show();
+          });
         });
 
-
-        _jQuery('#authservice-forgot-submit').click(function() {
+        _jQuery('#authservice-forgot-submit').click(function () {
           var username = _jQuery('#authservice-forgot-username').val();
           alert('forgot(' + username + ')');
 
@@ -767,7 +816,6 @@ console.log('*** jQuery AJAX call (before)');
             _jQuery('#authservice-forgot-div').hide();
             _jQuery('#authservice-forgot-done').show();
             return false;
-
           } else {
             // We don't tell the user if they have entered
             // an incorrect email address, as it could be used
@@ -778,8 +826,7 @@ console.log('*** jQuery AJAX call (before)');
           }
         });
 
-
-        _jQuery('#authservice-register-submit').click(function() {
+        _jQuery('#authservice-register-submit').click(function () {
           var username = _jQuery('#authservice-register-username').val();
           var password = _jQuery('#authservice-register-password').val();
           //alert('authservice.register(' + username + ', ' + password + ')');
@@ -797,13 +844,13 @@ console.log('*** jQuery AJAX call (before)');
             _jQuery('#authservice-register-errmsg').show();
             return false;
           }
-        });//- click
-      }//- bindToDOM
-    },// init()
+        }); //- click
+      } //- bindToDOM
+    }, // init()
 
 
     reloadUser: function reloadUser(callback) {
-      alert('authservice.reloadUser()')
+      alert('authservice.reloadUser()');
       console.log('reloadUser');
 
       // See if there is a current user.
@@ -819,14 +866,13 @@ console.log('*** jQuery AJAX call (before)');
 
       // Perhaps we're using dummy data.
       if (_pretend) {
-        console.log('reloading dummy data')
+        console.log('reloading dummy data');
         var user = getDummyUser(_currentUser.username);
         var ttuat = null;
         var isFromCookie = false;
         setCurrentUser(user, ttuat, isFromCookie);
         return callback(user);
       }
-
 
       // Get the current user from the database again
       var params = {
@@ -835,10 +881,10 @@ console.log('*** jQuery AJAX call (before)');
         needRelationships: true,
         needProperties: true
       };
-      authservice_ajax_call('POST', '/getIdentityWithAuthtoken', params, NOT_AUTHORIZED, function(identities) {
+      authservice_ajax_call('POST', '/getIdentityWithAuthtoken', params, NOT_AUTHORIZED, function (identities) {
 
         // API call SUCCESS
-        console.log('back from /getIdentityWithAuthtoken ', identities)
+        console.log('back from /getIdentityWithAuthtoken ', identities);
         if (identities && identities.length > 0) {
 
           // Got the user.
@@ -848,7 +894,7 @@ console.log('*** jQuery AJAX call (before)');
           var fromCookie = false;
           setCurrentUser(user, ttuat, fromCookie);
           if (callback) {
-            callback(user)
+            callback(user);
           }
         } else {
 
@@ -856,20 +902,19 @@ console.log('*** jQuery AJAX call (before)');
           console.log('Could not reload user. Must have timed out.');
           setCurrentUser(null, null, fromCookie);
           if (callback) {
-            callback(null)
+            callback(null);
           }
         }
-      }, function(statusCode, statusText, error) {
+      }, function (statusCode, statusText, error) {
 
         // API call FAIL
         console.log('Was not able to reload the user:', statusCode, statusText, console.error);
         setCurrentUser(null, null, fromCookie);
         if (callback) {
-          callback(null)
+          callback(null);
         }
       });
-    },// reloadUser
-
+    }, // reloadUser
 
 
     /*
@@ -893,17 +938,15 @@ console.log('*** jQuery AJAX call (before)');
         _jQuery('#authservice-register-username').val('');
         _jQuery('#authservice-register-password').val('');
 
-
         // hide the menu
         // _jQuery('#authservice-user-dropdown').dropdown('toggle');
         _jQuery('#authservice-user-dropdown').parent().removeClass('open');
         // _jQuery('[data-toggle="dropdown"]').parent().removeClass('open');
-      }//- _bindToDOM
+      } //- _bindToDOM
       return true;
     },
 
-
-    getUser: function getUser(params, callback/*(user)*/) {
+    getUser: function getUser(params, callback /*(user)*/) {
       console.log('getUser()');
       authservice_ajax_call('POST', '/admin/getUser', params, AUTHORIZED, callback);
     }, //getUser
@@ -912,50 +955,48 @@ console.log('*** jQuery AJAX call (before)');
     /*
      *  Create a new auth_relationship
      */
-    addRelationship: function addRelationship(params, callback/*(result)*/) {
+    addRelationship: function addRelationship(params, callback /*(result)*/) {
       console.log('addRelationship()');
       authservice_ajax_call('POST', '/admin/addRelationship', params, AUTHORIZED, callback);
-    },// addRelationship
+    }, // addRelationship
 
 
     /*
      *  Remove an auth_relationship
      */
-    removeRelationship: function removeRelationship(params, callback/*(result)*/) {
+    removeRelationship: function removeRelationship(params, callback /*(result)*/) {
       console.log('removeRelationship()');
       authservice_ajax_call('POST', '/admin/removeRelationship', params, AUTHORIZED, callback);
-    },// addRelationship
-
+    }, // addRelationship
 
 
     /*
      *  Create a new auth_property
      */
-    addProperty: function addProperty(params, callback/*(result)*/) {
+    addProperty: function addProperty(params, callback /*(result)*/) {
       console.log('addProperty()');
       authservice_ajax_call('POST', '/admin/addProperty', params, AUTHORIZED, callback);
-    },// addRelationship
+    }, // addRelationship
 
 
     /*
      *  Remove an auth_property
      */
-    removeProperty: function removeProperty(params, callback/*(result)*/) {
+    removeProperty: function removeProperty(params, callback /*(result)*/) {
       console.log('removeProperty()');
       authservice_ajax_call('POST', '/admin/removeProperty', params, AUTHORIZED, callback);
-    },// addRelationship
+    }, // addRelationship
 
 
     nocomma: null
 
-
-  };//- object
+  }; //- object
 
   // Start the OAuth2 login process with Facebook, Google, Github, etc.
   function initiateOAuth2(config) {
     //alert('authservice.initiateOAuth2():', config)
 
-    if (typeof(config) == 'string') {
+    if (typeof config == 'string') {
       var authority = config;
       var successURL = null;
       var failURL = null;
@@ -975,9 +1016,9 @@ console.log('*** jQuery AJAX call (before)');
     if (!failURL) {
       failURL = successURL;
     }
-    console.log('successURL=' + successURL)
-    console.log('successURL=' + encodeURIComponent(successURL))
-    console.log('failURL=' + failURL)
+    console.log('successURL=' + successURL);
+    console.log('successURL=' + encodeURIComponent(successURL));
+    console.log('failURL=' + failURL);
 
     var url = 'http://' + _host + ':' + _port + '/v2/oauth2/initiate/' + _apikey + '/' + authority;
     url += '?success=' + encodeURIComponent(successURL);
@@ -986,13 +1027,12 @@ console.log('*** jQuery AJAX call (before)');
     window.location = url;
   }
 
-
   function login(email, password, successCallback, failCallback) {
     console.log('authservice.login(username=' + email + ')');
 
     // If we are pretending, get the user details now.
     if (_pretend) {
-      console.log('seems we are pretending')
+      console.log('seems we are pretending');
       var user = getDummyUser(email);
       var isFromCookie = false;
       setCurrentUser(user, null, isFromCookie);
@@ -1007,41 +1047,41 @@ console.log('*** jQuery AJAX call (before)');
      */
     var params = {
       email: email,
-      password: password,
+      password: password
     };
-    authservice_ajax_call('POST', '/email/login', params, NOT_AUTHORIZED, function(response) {
+    authservice_ajax_call('POST', '/email/login', params, NOT_AUTHORIZED, function (response) {
       console.log('authservice.login() back from AJAX call with', response);
 
-        if (response.status == 'ok') {
+      if (response.status == 'ok') {
 
-          // Logged in.
-          console.log('Back from login:', response);
-          // var user = convertIdentityToUser(response.identity);
-          var jwt = response.jwt;
-          var isFromCookie = false;
-          if (setCurrentUserFromJWT(jwt, isFromCookie)) {
-            // Good login
-            setCookie(JWT_COOKIE_NAME, jwt, LOGIN_TIMEOUT_DAYS);
-          } else {
-            // Bad login
-            removeCookie(JWT_COOKIE_NAME);
-          }
-          if (successCallback) {
-            return successCallback(_currentUser);
-          }
+        // Logged in.
+        console.log('Back from login:', response);
+        // var user = convertIdentityToUser(response.identity);
+        var jwt = response.jwt;
+        var isFromCookie = false;
+        if (setCurrentUserFromJWT(jwt, isFromCookie)) {
+          // Good login
+          setCookie(JWT_COOKIE_NAME, jwt, LOGIN_TIMEOUT_DAYS);
         } else {
-
-          // We did not sucessfully login
-          // Display an error message
-          //_jQuery('#authservice-login-errmsg').show();
-          var errmess = response.message;
-          if (failCallback) {
-            return failCallback(response.message);
-          } else {
-            alert('Login error:' + errmess)
-          }
+          // Bad login
+          removeCookie(JWT_COOKIE_NAME);
         }
-    }, function(statusCode, statusText, responseJSON) {
+        if (successCallback) {
+          return successCallback(_currentUser);
+        }
+      } else {
+
+        // We did not sucessfully login
+        // Display an error message
+        //_jQuery('#authservice-login-errmsg').show();
+        var errmess = response.message;
+        if (failCallback) {
+          return failCallback(response.message);
+        } else {
+          alert('Login error:' + errmess);
+        }
+      }
+    }, function (statusCode, statusText, responseJSON) {
       console.log('Login failed: ', statusCode, statusText, responseJSON);
       if (failCallback) {
         if (responseJSON && responseJSON.message) {
@@ -1050,8 +1090,7 @@ console.log('*** jQuery AJAX call (before)');
         return failCallback(statusText);
       }
     });
-  }//- login()
-
+  } //- login()
 
 
   function logout() {
@@ -1061,7 +1100,7 @@ console.log('*** jQuery AJAX call (before)');
     setCurrentUser(null, null, isFromCookie);
     authservice.resetLoginMenu();
     return false;
-  }//- logout()
+  } //- logout()
 
 
   function register(options, successCallback, failCallback) {
@@ -1076,7 +1115,7 @@ console.log('*** jQuery AJAX call (before)');
 
     // If we are pretending, get the user details now.
     if (_pretend) {
-      console.log('seems we are pretending')
+      console.log('seems we are pretending');
       return successCallback();
     }
 
@@ -1085,7 +1124,7 @@ console.log('*** jQuery AJAX call (before)');
      *  Call the server to register.
      */
     // Check email and password is valid
-    if (email==null || email.indexOf('@') < 1) {
+    if (email == null || email.indexOf('@') < 1) {
       return failCallback('Please enter a valid email address');
     }
     var params = {
@@ -1117,7 +1156,7 @@ console.log('*** jQuery AJAX call (before)');
     }
     if (middle_name) {
       // if (middle_name.length > 0) {
-        params.middle_name = middle_name;
+      params.middle_name = middle_name;
       // }
     }
     if (last_name) {
@@ -1129,10 +1168,10 @@ console.log('*** jQuery AJAX call (before)');
 
     // Call the server
     console.log('params=', params);
-    authservice_ajax_call('PUT', '/email/register', params, NOT_AUTHORIZED, function(response) {
+    authservice_ajax_call('PUT', '/email/register', params, NOT_AUTHORIZED, function (response) {
 
       // Success
-      console.log('response is ', response)
+      console.log('response is ', response);
 
       if (response && response.status == 'ok') {
         // If we have a new JWT, re-set the current user
@@ -1153,19 +1192,19 @@ console.log('*** jQuery AJAX call (before)');
       } else {
         // Display an error message
         //_jQuery('#authservice-login-errmsg').show();
-        var err = (response && response.message) ? response.message : 'Error while registering';
+        var err = response && response.message ? response.message : 'Error while registering';
         if (failCallback) {
           return failCallback(err);
         }
       }
-    }, function(code, text, data) {
+    }, function (code, text, data) {
       // Error
-      var err = (data && data.Error) ? data.Error : 'Error while registering';
+      var err = data && data.Error ? data.Error : 'Error while registering';
       if (failCallback) {
         return failCallback(err);
       }
     });
-  }// register()
+  } // register()
 
 
   function forgot(options, successCallback, failCallback) {
@@ -1175,7 +1214,7 @@ console.log('*** jQuery AJAX call (before)');
 
     // If we are pretending, get the user details now.
     if (_pretend) {
-      console.log('seems we are pretending')
+      console.log('seems we are pretending');
       return successCallback();
     }
 
@@ -1184,7 +1223,7 @@ console.log('*** jQuery AJAX call (before)');
      *  Call the server to register.
      */
     // Check email and password is valid
-    if (email==null || email.indexOf('@') < 1) {
+    if (email == null || email.indexOf('@') < 1) {
       return failCallback('Please enter a valid email address');
     }
     var params = {
@@ -1194,8 +1233,8 @@ console.log('*** jQuery AJAX call (before)');
 
     // Call the server
     console.log('params=', params);
-    authservice_ajax_call('POST', '/email/forgot', params, NOT_AUTHORIZED, function(response) {
-      console.log('response is ', response)
+    authservice_ajax_call('POST', '/email/forgot', params, NOT_AUTHORIZED, function (response) {
+      console.log('response is ', response);
 
       if (response && response.status == 'ok') {
 
@@ -1206,13 +1245,13 @@ console.log('*** jQuery AJAX call (before)');
       } else {
 
         // Error
-        var err = (response && response.message) ? response.message : 'Error while sending email';
+        var err = response && response.message ? response.message : 'Error while sending email';
         if (failCallback) {
           return failCallback(err);
         }
       }
     });
-  }// register()
+  } // register()
 
 
   function updateUser(user, successCallback, failCallback) {
@@ -1224,7 +1263,7 @@ console.log('*** jQuery AJAX call (before)');
 
     // If we are pretending, get the user details now.
     if (_pretend) {
-      console.log('seems we are pretending')
+      console.log('seems we are pretending');
       return successCallback();
     }
 
@@ -1237,8 +1276,7 @@ console.log('*** jQuery AJAX call (before)');
     var url = ENDPOINT + '/user';
     console.log('user=', user);
 
-
-    var json = JSON.stringify(user)
+    var json = JSON.stringify(user);
     _jQuery.ajax({
       url: ENDPOINT + '/user',
       type: 'POST',
@@ -1250,7 +1288,7 @@ console.log('*** jQuery AJAX call (before)');
         'Authorization': 'Bearer ' + _jwt
       },
       contentType: 'application/json',
-      success: function(response) {
+      success: function success(response) {
         console.log('Authservice.updateUser() success', response);
 
         if (response && response.status == 'ok') {
@@ -1271,8 +1309,8 @@ console.log('*** jQuery AJAX call (before)');
         // Successful AJAX call.
         return successCallback(response);
       },
-      error: function(jqxhr, textStatus, errorThrown) {
-        console.log('Authservice.updateUser() failed', jqxhr, textStatus, errorThrown)
+      error: function error(jqxhr, textStatus, errorThrown) {
+        console.log('Authservice.updateUser() failed', jqxhr, textStatus, errorThrown);
 
         if (jqxhr.responseJSON && jqxhr.responseJSON.Error) {
           console.log('Error is ', jqxhr.responseJSON.Error);
@@ -1283,13 +1321,12 @@ console.log('*** jQuery AJAX call (before)');
     });
   }
 
-
   function usernameAvailability(username, successCallback, failCallback) {
     console.log('usernameAvailability()', username);
 
     // If we are pretending, get the user details now.
     if (_pretend) {
-      console.log('seems we are pretending')
+      console.log('seems we are pretending');
       return successCallback(true);
     }
 
@@ -1311,7 +1348,7 @@ console.log('*** jQuery AJAX call (before)');
       // data: json,
       dataType: "json",
       contentType: 'application/json',
-      success: function(response) {
+      success: function success(response) {
 
         // Successful AJAX call.
         console.log('Authservice.usernameAvailability() success', response);
@@ -1321,8 +1358,8 @@ console.log('*** jQuery AJAX call (before)');
           return successCallback(response.error);
         }
       },
-      error: function(jqxhr, textStatus, errorThrown) {
-        console.log('Authservice.usernameAvailability() failed', jqxhr, textStatus, errorThrown)
+      error: function error(jqxhr, textStatus, errorThrown) {
+        console.log('Authservice.usernameAvailability() failed', jqxhr, textStatus, errorThrown);
 
         if (jqxhr.responseJSON && jqxhr.responseJSON.Error) {
           console.log('Error is ', jqxhr.responseJSON.Error);
@@ -1337,16 +1374,14 @@ console.log('*** jQuery AJAX call (before)');
     return '2.0.0';
   }
 
-
   function healthcheck(successCallback, failCallback) {
     console.log('Authservice.healthcheck()');
 
     // If we are pretending, get the user details now.
     if (_pretend) {
-      console.log('seems we are pretending')
+      console.log('seems we are pretending');
       return successCallback(null);
     }
-
 
     /*
      *  Not pretending.
@@ -1356,7 +1391,7 @@ console.log('*** jQuery AJAX call (before)');
     // Call the server
     var url = 'http:' + ENDPOINT + '/v2/healthcheck/';
     //ttcf-dcprd-alb-as4dcprd-680691433.ap-southeast-1.elb.amazonaws.com:80/v1/drinkcircle/login
-    var url = 'http://ttcf-dcprd-alb-as4dcprd-680691433.ap-southeast-1.elb.amazonaws.com:80/v2/healthcheck'
+    var url = 'http://ttcf-dcprd-alb-as4dcprd-680691433.ap-southeast-1.elb.amazonaws.com:80/v2/healthcheck';
     console.log('url=', url);
 
     _jQuery.ajax({
@@ -1367,7 +1402,7 @@ console.log('*** jQuery AJAX call (before)');
       // data: json,
       dataType: "json",
       contentType: 'application/json',
-      success: function(response) {
+      success: function success(response) {
 
         // Successful AJAX call.
         console.log('Authservice.healthcheck() success', response);
@@ -1377,7 +1412,7 @@ console.log('*** jQuery AJAX call (before)');
           return successCallback(response.error);
         }
       },
-      error: function(jqxhr, textStatus, errorThrown) {
+      error: function error(jqxhr, textStatus, errorThrown) {
         // console.log('1: Authservice.healthcheck() failed', jqxhr)
         // console.log('2: Authservice.healthcheck() failed', textStatus)
         // console.log('3: Authservice.healthcheck() failed', errorThrown)
@@ -1408,20 +1443,19 @@ console.log('*** jQuery AJAX call (before)');
     console.log('Authservice.healthcheck() returning (but still running async)');
   }
 
-
   // When this is called from a page, two things happen.
   //  1. If there is a 'jwt' parameter to the page it gets stored as a cookie.
   //  2. If there is a 'resume' parameter, we jump to that URL.
   function bounce() {
-    var jwt = getURLParameterByName("AUTHSERVICE_JWT")
+    var jwt = getURLParameterByName("AUTHSERVICE_JWT");
     if (jwt) {
-      console.log("*** setting JWT cookie")
+      console.log("*** setting JWT cookie");
       setCookie(JWT_COOKIE_NAME, jwt, LOGIN_TIMEOUT_DAYS);
     }
-    var resume = getURLParameterByName("resume")
-    console.log('Redirect to ' + resume)
+    var resume = getURLParameterByName("resume");
+    console.log('Redirect to ' + resume);
     //alert('about to redirect')
-    var debug = getURLParameterByName("debug")
+    var debug = getURLParameterByName("debug");
     if (!debug) {
       window.location = resume;
     }
@@ -1434,22 +1468,19 @@ console.log('*** jQuery AJAX call (before)');
     }
     l = window.location;
     var thisPageURL = l.protocol + "//" + l.host; // + l.pathname + s + l.hash;
-    var url = thisPageURL + bouncePageRelativePath + '?resume=' + encodeURIComponent(resumeURL)
+    var url = thisPageURL + bouncePageRelativePath + '?resume=' + encodeURIComponent(resumeURL);
     return url;
   }
-
 
   /*
    *    Get the current URL, and remove any Authservice parameters.
    */
   function currentPageURL() {
     l = window.location;
-    var s = l.search;//?....&....&....
+    var s = l.search; //?....&....&....
     if (s != '') {
       s = '&' + s.substring(1); // Replace initial ? with &
-      s = s
-        .replace(/&AUTHSERVICE_JWT=[^&]*/, '')
-        .replace(/&AUTHSERVICE_ERROR=[^&]*/, '');
+      s = s.replace(/&AUTHSERVICE_JWT=[^&]*/, '').replace(/&AUTHSERVICE_ERROR=[^&]*/, '');
       if (s != '') {
         s = '?' + s.substring(1); // Replace initial & with ?
       }
@@ -1457,8 +1488,7 @@ console.log('*** jQuery AJAX call (before)');
     var thisPageURL = l.protocol + "//" + l.host + l.pathname + s + l.hash;
     return thisPageURL;
   }
-
-})(); // authservice
+}(); // authservice
 
 var authservice = Authservice;
 
@@ -1466,3 +1496,7 @@ var authservice = Authservice;
 //tta2.init('http://127.0.0.1:9090', 'nodeclient');
 
 module.exports = Authservice;
+
+/***/ })
+/******/ ]);
+});
